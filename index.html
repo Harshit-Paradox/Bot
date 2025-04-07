@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Dashboard with AI Assistant</title>
+    <link rel="stylesheet"
+        href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: rgb(249, 250, 251);
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-image img {
+            height: 40px;
+            /* Adjust as needed */
+            width: auto;
+        }
+
+        .logo svg {
+            width: 2rem;
+            height: 2rem;
+            color: rgb(37, 99, 235);
+        }
+
+        /* .logo span {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+        } */
+
+        main {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .teams-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgb(17, 24, 39);
+            margin-bottom: 1.5rem;
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .teams-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .team-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .team-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-card.selected {
+            background-color: rgb(239, 246, 255);
+            border-color: rgb(59, 130, 246);
+        }
+
+        .team-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .team-icon {
+            padding: 0.5rem;
+            background-color: rgb(249, 250, 251);
+            border-radius: 0.5rem;
+        }
+
+        .team-icon svg {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .team-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+        }
+
+        .team-info p {
+            font-size: 0.875rem;
+            color: rgb(107, 114, 128);
+            margin-top: 0.25rem;
+        }
+
+        .team-info .members {
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+            margin-top: 0.5rem;
+        }
+
+        .ai-panel {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-header svg {
+            width: 2rem;
+            height: 2rem;
+            color: rgb(59, 130, 246);
+        }
+
+        .ai-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgb(17, 24, 39);
+        }
+
+        .ai-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .ai-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+        }
+
+        .ai-content p {
+            color: rgb(75, 85, 99);
+        }
+
+        .quick-actions {
+            background-color: rgb(239, 246, 255);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .quick-actions h4 {
+            font-weight: 500;
+            color: rgb(30, 58, 138);
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-actions ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quick-actions li {
+            color: rgb(29, 78, 216);
+            cursor: pointer;
+        }
+
+        .quick-actions li:hover {
+            color: rgb(30, 58, 138);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .empty-state svg {
+            width: 4rem;
+            height: 4rem;
+            color: rgb(209, 213, 219);
+            margin: 0 auto 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: rgb(17, 24, 39);
+        }
+
+        .empty-state p {
+            color: rgb(107, 114, 128);
+            margin-top: 0.5rem;
+        }
+
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            bottom: 16px;
+            right: 16px;
+        }
+
+        .chatbot-container {
+            height: 600px;
+            position: relative;
+        }
+
+        .chatbot-container df-messenger {
+            position: absolute;
+
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>Art of Living</span>
+            </div>
+            <div class="header-image">
+                <img src="arol.png" alt="Header Image">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="teams-section">
+                <div class="teams-grid" id="teamsGrid"></div>
+            </div>
+
+            <div class="ai-panel" id="aiPanel"></div>
+        </div>
+    </main>
+
+    <script>
+        const teams = [
+            {
+                id: 1,
+                name: 'Marketing Team',
+                description: 'Driving brand awareness and growth',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(168, 85, 247);"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>',
+                members: 8
+            },
+            {
+                id: 2,
+                name: 'Participant',
+                description: 'Building amazing products',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(59, 130, 246);"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>',
+                members: 12
+            },
+            {
+                id: 3,
+                name: 'Teacher',
+                description: 'Creating beautiful experiences',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(236, 72, 153);"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>',
+                members: 6
+            },
+            {
+                id: 4,
+                name: 'Support Team',
+                description: 'Data-driven insights',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(34, 197, 94);"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>',
+                members: 5
+            },
+            {
+                id: 5,
+                name: 'Research Team',
+                description: 'People and culture',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(249, 115, 22);"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+                members: 4
+            },
+            {
+                id: 6,
+                name: 'Grants Team',
+                description: 'Keeping things running smoothly',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(20, 184, 166);"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>',
+                members: 7
+            }
+        ];
+
+        let selectedTeam = null;
+
+        function createTeamCard(team) {
+            return `
+                <div class="team-card ${selectedTeam?.id === team.id ? 'selected' : ''}" data-team-id="${team.id}">
+                    <div class="team-content">
+                        <div class="team-icon">
+                            ${team.icon}
+                        </div>
+                        <div class="team-info">
+                            <h3>${team.name}</h3>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+
+        function updateAIPanel() {
+            const aiPanel = document.getElementById('aiPanel');
+
+            if (!selectedTeam) {
+                aiPanel.innerHTML = `
+        <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+            <h3>Select a team</h3>
+            <p>Click on a team card to view more information</p>
+        </div>
+    `;
+                return;
+            }
+
+            // Map team to bot iframe pages
+            const botIframePages = {
+                1: ['bots/marketing.html'],
+                2: ['bots/sales.html'],
+                3: ['bots/teachers.html'],
+                4: ['bots/support.html'],
+                5: ['bots/marketing.html'],
+                6: ['bots/marketing.html']
+            };
+
+            const botIframes = botIframePages[selectedTeam.id] || [];
+
+            const iframesHTML = botIframes.map(src => {
+                const uniqueSrc = `${src}?team=${selectedTeam.id}&ts=${Date.now()}`;
+                const iframeId = `iframe-${selectedTeam.id}-${Math.random().toString(36).substring(2, 8)}`;
+                return `
+            <iframe 
+                id="${iframeId}"
+                src="${uniqueSrc}" 
+                width="100%" 
+                height="500px" 
+                frameborder="0" 
+                style="border-radius: 8px; margin-bottom: 30px;">
+            </iframe>
+        `;
+            }).join('');
+
+            aiPanel.innerHTML = `
+    <div class="ai-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+        <h2>Art of Living AI Assistants Hub</h2>
+    </div>
+    <div class="ai-content">
+        <div class="chatbot-container" style="padding-top: 100px;">
+            ${iframesHTML}
+        </div>
+    </div>
+    `;
+        }
+
+
+        function renderTeams() {
+            const teamsGrid = document.getElementById('teamsGrid');
+            teamsGrid.innerHTML = teams.map(team => createTeamCard(team)).join('');
+
+            // Add click event listeners
+            teamsGrid.querySelectorAll('.team-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const teamId = parseInt(card.dataset.teamId);
+                    selectedTeam = teams.find(team => team.id === teamId);
+                    renderTeams(); // Re-render to update selection state
+                    updateAIPanel();
+                });
+            });
+        }
+
+        // Initial render
+        renderTeams();
+        updateAIPanel();
+    </script>
+
+    <!-- ElevenLabs Voice Agent -->
+    <elevenlabs-convai agent-id="8SnDAVhg5uWAxLQEV0hV"></elevenlabs-convai>
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+</body>
+
+</html>
