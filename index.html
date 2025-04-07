@@ -254,18 +254,24 @@
         }
 
         .chatbot-container {
-            height: 600px;
+            height: 700px;
             position: relative;
         }
 
         .chatbot-container df-messenger {
-            position: absolute;
+            position: relative;
 
-            right: 0;
+            right: -500px;
             bottom: 0;
             left: 0;
 
             width: 100%;
+        }
+
+        .elevenlabs-convai-launcher {
+            right: auto !important;
+            left: 20px !important;
+            bottom: 20px !important;
         }
     </style>
 </head>
@@ -403,7 +409,7 @@
         <h2>Art of Living AI Assistants Hub</h2>
     </div>
     <div class="ai-content">
-        <div class="chatbot-container" style="padding-top: 100px;">
+        <div class="chatbot-container";">
             ${iframesHTML}
         </div>
     </div>
