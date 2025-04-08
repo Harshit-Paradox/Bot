@@ -17,7 +17,7 @@
         }
 
         body {
-            min-height: 100vh;
+            min-height: 50vh;
             background-color: rgb(249, 250, 251);
         }
 
@@ -93,7 +93,7 @@
         main {
             max-width: 80rem;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 0.75rem 1rem;
         }
 
         .container {
@@ -224,15 +224,38 @@
         }
 
         .quick-actions {
-            background-color: rgb(239, 246, 255);
-            padding: 1rem;
+            /* background-color: rgb(239, 246, 255); */
+            /* padding: 1rem; */
             border-radius: 0.5rem;
+            padding-right: 160px;
+
+            display: flex;
+
+            justify-content: flex-end;
         }
 
-        .quick-actions h4 {
-            font-weight: 500;
-            color: rgb(30, 58, 138);
-            margin-bottom: 0.5rem;
+        .quick-action-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* space between image and text */
+        }
+
+        .quick-action-item img {
+            width: 3rem;
+            height: 3rem;
+            object-fit: cover;
+            margin-bottom: 0;
+            /* remove previous margin */
+        }
+
+        .quick-action-item span {
+            font-size: 1.25rem;
+            /* increase size (try 1.5rem for even bigger) */
+            font-weight: bold;
+            /* no quotes */
+            color: #1f2937;
+            /* dark text */
         }
 
         .quick-actions ul {
@@ -274,7 +297,7 @@
             margin-top: 0.5rem;
         }
 
-        df-messenger {
+        .df-messenger {
             z-index: 999;
             position: fixed;
             --df-messenger-font-color: #000;
@@ -282,12 +305,22 @@
             --df-messenger-chat-background: #f3f6fc;
             --df-messenger-message-user-background: #d3e3fd;
             --df-messenger-message-bot-background: #fff;
-            bottom: 16px;
+            bottom: 80px;
+            /* ⬅️ shift up from bottom */
             right: 16px;
         }
 
+        .chatbot-container df-messenger {
+            position: relative;
+            right: -200px;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+        }
+
+
         .chatbot-container {
-            height: 600px;
+            height: 700px;
             /* position: relative; */
         }
 
@@ -462,9 +495,14 @@
         <h2>Art of Living ${selectedTeam.name} AI Assistant</h2>
     </div>
     <div class="ai-content">
-        <div class="chatbot-container";">
+        <div class="chatbot-container">
             ${iframesHTML}
-        </div>
+  <div class="quick-actions">
+  <div class="quick-action-item">
+    <img src="microphone.png" alt="User Image">
+    <span>Voice AI Assistant</span>
+  </div>
+</div>
     </div>
     `;
         }
@@ -488,6 +526,15 @@
         // Initial render
         renderTeams();
         updateAIPanel();
+    </script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const dfMessenger = document.querySelector('df-messenger');
+            if (dfMessenger) {
+                dfMessenger.style.bottom = '32px'; // ⬅️ set the new position
+            }
+        });
     </script>
 
     <!-- ElevenLabs Voice Agent -->
