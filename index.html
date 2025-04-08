@@ -183,7 +183,8 @@
 
         .ai-panel {
             background-color: white;
-            padding: 1.5rem;
+            width: 100%;
+            padding-left: 1.5rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             height: fit-content;
@@ -193,17 +194,17 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-bottom: 1.5rem;
+            /* margin-bottom: 1.5rem; */
         }
 
         .ai-header img {
-            width: 5rem;
-            height: 5rem;
+            width: 4rem;
+            height: 4rem;
         }
 
         .ai-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
             color: rgb(17, 24, 39);
         }
 
@@ -258,6 +259,7 @@
             /* dark text */
         }
 
+
         .quick-actions ul {
             list-style: none;
             display: flex;
@@ -272,6 +274,19 @@
 
         .quick-actions li:hover {
             color: rgb(30, 58, 138);
+        }
+
+        .team-stats-section {
+            margin-top: 6rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-stats-section h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
         .empty-state {
@@ -320,7 +335,7 @@
 
 
         .chatbot-container {
-            height: 700px;
+            height: 650px;
             /* position: relative; */
         }
 
@@ -369,7 +384,7 @@
                 </div>
             </div>
             <div class="header-image">
-                <img src="arol.png" alt="Header Image">
+                <img src="Art of Living Logo.png" alt="Header Image">
             </div>
         </div>
     </header>
@@ -377,6 +392,14 @@
         <div class="container">
             <div class="teams-section">
                 <div class="teams-grid" id="teamsGrid"></div>
+
+                <!-- New section below teams grid -->
+                <div class="team-stats-section" id="teamStats">
+                    <h2>Note</h2>
+                    <p>These AI assistants are for general support only - please verify information independently before
+                        relying on it.</p>
+                    <!-- Add your content here -->
+                </div>
             </div>
 
             <div class="ai-panel" id="aiPanel"></div>
@@ -468,8 +491,8 @@
                 2: ['bots/sales.html'],
                 3: ['bots/teachers.html'],
                 4: ['bots/support.html'],
-                5: ['bots/marketing.html'],
-                6: ['bots/marketing.html']
+                5: ['bots/research.html'],
+                6: ['bots/grant.html']
             };
 
             const botIframes = botIframePages[selectedTeam.id] || [];
@@ -478,31 +501,29 @@
                 const uniqueSrc = `${src}?team=${selectedTeam.id}&ts=${Date.now()}`;
                 const iframeId = `iframe-${selectedTeam.id}-${Math.random().toString(36).substring(2, 8)}`;
                 return `
-            <iframe 
-                id="${iframeId}"
-                src="${uniqueSrc}" 
-                width="100%" 
-                height="500px" 
-                frameborder="0" 
-                style="border-radius: 8px; margin-bottom: 30px;">
-            </iframe>
+<div style="display: flex; align-items: flex-start;">
+    
+  <iframe 
+    id="${iframeId}"
+    src="${uniqueSrc}" 
+    width="70%" 
+    height="660px" 
+    frameborder="0" 
+    style="border-radius: 8px; margin-bottom: 60px; margin-right: 60px;">
+  </iframe>
+</div>
         `;
             }).join('');
 
             aiPanel.innerHTML = `
     <div class="ai-header">
-        <img src="Teacher.png"  class="team-icon">
+        <img src="ai-assistant.png"  class="team-icon">
         <h2>Art of Living ${selectedTeam.name} AI Assistant</h2>
+
     </div>
     <div class="ai-content">
         <div class="chatbot-container">
             ${iframesHTML}
-  <div class="quick-actions">
-  <div class="quick-action-item">
-    <img src="microphone.png" alt="User Image">
-    <span>Voice AI Assistant</span>
-  </div>
-</div>
     </div>
     `;
         }
