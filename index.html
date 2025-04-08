@@ -28,33 +28,67 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             padding: 10px 20px;
+            gap: 1rem;
         }
 
-        .logo span {
-            font-size: 24px;
-            font-weight: bold;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-grow: 1;
+            /* Pushes rest of content to the right */
+        }
+
+        .profile-image {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #111827;
+            cursor: pointer;
+        }
+
+        .profile-option img {
+            width: 3rem;
+            height: 3rem;
+            object-fit: cover;
+            margin-bottom: 0.25rem;
         }
 
         .header-image img {
-            height: 40px;
-            /* Adjust as needed */
+            height: 50px;
             width: auto;
         }
 
-        .logo svg {
-            width: 2rem;
-            height: 2rem;
+        .logo {
+            display: flex;
+            align-items: center;
+            /* This centers the span vertically relative to the image */
+            gap: 0.5rem;
+            /* Optional: adds spacing between image and text */
+        }
+
+        .logo img {
+            width: 3rem;
+            height: 3rem;
             color: rgb(37, 99, 235);
         }
 
-        /* .logo span {
+
+        .logo span {
             font-size: 1.25rem;
             font-weight: 600;
             color: rgb(17, 24, 39);
-        } */
+        }
 
         main {
             max-width: 80rem;
@@ -114,7 +148,7 @@
 
         .team-content {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 1rem;
         }
 
@@ -124,9 +158,9 @@
             border-radius: 0.5rem;
         }
 
-        .team-icon svg {
-            width: 2rem;
-            height: 2rem;
+        .team-icon img {
+            width: 5rem;
+            height: 5rem;
         }
 
         .team-info h3 {
@@ -162,10 +196,9 @@
             margin-bottom: 1.5rem;
         }
 
-        .ai-header svg {
-            width: 2rem;
-            height: 2rem;
-            color: rgb(59, 130, 246);
+        .ai-header img {
+            width: 5rem;
+            height: 5rem;
         }
 
         .ai-header h2 {
@@ -254,16 +287,16 @@
         }
 
         .chatbot-container {
-            height: 700px;
-            position: relative;
+            height: 600px;
+            /* position: relative; */
         }
 
         .chatbot-container df-messenger {
             position: relative;
 
-            right: -500px;
-            bottom: 0;
-            left: 0;
+            right: -200px;
+            bottom: 0px;
+            left: 0px;
 
             width: 100%;
         }
@@ -273,6 +306,15 @@
             left: 20px !important;
             bottom: 20px !important;
         }
+
+        .div[class*="_wrapper_"][class*="_open_"] {
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 200px !important;
+            top: auto !important;
+            right: auto !important;
+            z-index: 9999 !important;
+        }
     </style>
 </head>
 
@@ -280,7 +322,18 @@
     <header>
         <div class="header-content">
             <div class="logo">
-                <span>Art of Living</span>
+                <img src="ai-assistant.png" alt="Header Image">
+                <span>Art of Living AI Assistants Hub</span>
+            </div>
+            <div class="profile-image">
+                <div class="profile-option">
+                    <img src="user.png" alt="User Image">
+                    <span>My Profile</span>
+                </div>
+                <div class="profile-option">
+                    <img src="logout (1).png" alt="Logout Icon">
+                    <span>Logout</span>
+                </div>
             </div>
             <div class="header-image">
                 <img src="arol.png" alt="Header Image">
@@ -303,42 +356,42 @@
                 id: 1,
                 name: 'Marketing Team',
                 description: 'Driving brand awareness and growth',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(168, 85, 247);"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>',
+                icon: '<img src="Marketing Team.png" class="team-icon" alt="Marketing Team">',
                 members: 8
             },
             {
                 id: 2,
                 name: 'Participant',
                 description: 'Building amazing products',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(59, 130, 246);"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>',
+                icon: '<img src="Participant.png" class="team-icon" alt="Participant">',
                 members: 12
             },
             {
                 id: 3,
                 name: 'Teacher',
                 description: 'Creating beautiful experiences',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(236, 72, 153);"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>',
+                icon: '<img src="Teacher.png" class="team-icon" alt="Teacher">',
                 members: 6
             },
             {
                 id: 4,
                 name: 'Support Team',
                 description: 'Data-driven insights',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(34, 197, 94);"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>',
+                icon: '<img src="Support Team.png" class="team-icon" alt="Support Team">',
                 members: 5
             },
             {
                 id: 5,
                 name: 'Research Team',
                 description: 'People and culture',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(249, 115, 22);"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+                icon: '<img src="Research Team.png" class="team-icon" alt="Research Team">',
                 members: 4
             },
             {
                 id: 6,
                 name: 'Grants Team',
                 description: 'Keeping things running smoothly',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(20, 184, 166);"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>',
+                icon: '<img src="Grants Team.png" class="team-icon" alt="Grants Team">',
                 members: 7
             }
         ];
@@ -405,8 +458,8 @@
 
             aiPanel.innerHTML = `
     <div class="ai-header">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
-        <h2>Art of Living AI Assistants Hub</h2>
+        <img src="Teacher.png"  class="team-icon">
+        <h2>Art of Living ${selectedTeam.name} AI Assistant</h2>
     </div>
     <div class="ai-content">
         <div class="chatbot-container";">
@@ -440,6 +493,7 @@
     <!-- ElevenLabs Voice Agent -->
     <elevenlabs-convai agent-id="8SnDAVhg5uWAxLQEV0hV"></elevenlabs-convai>
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
 </body>
 
 </html>
