@@ -21,7 +21,15 @@
             --df-messenger-message-user-background: #d3e3fd;
             --df-messenger-message-bot-background: #fff;
             bottom: 16px;
-            right: 16px;
+            /* right: 16px; */
+            left: 300px;
+        }
+
+        elevenlabs-convai {
+            position: fixed;
+            bottom: 20px;
+            left: 16px;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -31,6 +39,9 @@
         agent-id="fe9e19a5-2a0f-4fd3-92d5-5a299a37aa37" language-code="en">
         <df-messenger-chat-bubble chat-title="Grants Assistant"></df-messenger-chat-bubble>
     </df-messenger>
+
+    <!-- <elevenlabs-convai agent-id="QuzWlP7yIjuTVkts31U1"></elevenlabs-convai>
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script> -->
 </body>
 
 </html>

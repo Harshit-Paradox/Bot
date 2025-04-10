@@ -6,6 +6,10 @@
     <df-messenger-chat-bubble chat-title="Art of Living Customer Support Agent">
     </df-messenger-chat-bubble>
 </df-messenger>
+
+
+<elevenlabs-convai agent-id="8SnDAVhg5uWAxLQEV0hV"></elevenlabs-convai>
+<script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 <style>
     df-messenger {
         z-index: 999;
@@ -16,6 +20,14 @@
         --df-messenger-message-user-background: #d3e3fd;
         --df-messenger-message-bot-background: #fff;
         bottom: 16px;
-        right: 16px;
+        /* right: 16px; */
+        left: 300px;
+    }
+
+    elevenlabs-convai {
+        position: fixed;
+        bottom: 20px;
+        left: 16px;
+        z-index: 1000;
     }
 </style>
